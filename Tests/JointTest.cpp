@@ -45,14 +45,6 @@ void JointTest::Initialize() {
 		auto JointAB = new Joint(BodyA, BodyB, SPRING_STIFFNESS, SPRING_LENGTH * 2);
 		m_World->AddJoint(JointAB);
 	}
-	
-	/*auto body = new Body(new CircleShape(20, { 0, 0, 1, 1 }), { 400, 200 }, { 0, 0 }, 1, Body::DYNAMIC);
-	body->GravityScale = 250;
-	body->Damping = BODY_DAMPING;
-	m_World->AddBody(body);
-
-	auto joint = new Joint(PrevBody, body, SPRING_STIFFNESS, SPRING_LENGTH);
-	m_World->AddJoint(joint);*/
 }
 
 void JointTest::Update() {

@@ -4,7 +4,7 @@
 #include "Tests/CollisionTest.h"
 
 int main(int argc, char* argv[]) {
-	Test* Testing = new CollisionTest();
+	Test* Testing = new ForceTest();
 	Testing->Initialize();
 	while (!Testing->IsQuit()) Testing->Run();
 	delete Testing;

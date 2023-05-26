@@ -35,7 +35,7 @@ void Test::Run() {
 	Render();
 	PostRender();
 
-	m_Graphics->DrawCircle(m_Input->GetMousePosition(), 30, { 1, 0, 0, 1 });
+	m_Graphics->DrawCircle(m_Graphics->ScreenToWorld(m_Input->GetMousePosition()), 30, { 1, 0, 0, 1 });
 }
 
 

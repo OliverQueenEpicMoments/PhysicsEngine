@@ -14,12 +14,14 @@ World::~World() {
 
 void World::Step(float dt) {
 	std::vector<Body*> Bodies(m_Bodies.begin(), m_Bodies.end());
+	if (Bodies.empty()) return;
+
+	for (auto Joint : m_Joints) Joint->Step(dt);
 	if (!m_Bodies.empty() && !m_ForceGenerators.empty()) {
 		for (auto ForceGenerator : m_ForceGenerators) ForceGenerator->Apply(Bodies);
 	}
 
 	for (auto Body : Bodies) Body->Step(dt);
-	for (auto Joint : m_Joints) Joint->Step(dt);
 
 	// Collisions
 	std::vector<Contact> contacts;

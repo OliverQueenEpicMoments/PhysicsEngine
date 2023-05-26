@@ -5,42 +5,41 @@
 #include "../Physics/Forces/AreaForce.h"
 #include "../Physics/Forces/DragForce.h"
 
-#define POINT_FORCE
+//#define POINT_FORCE
 //#define AREA_FORCE
-//#define DRAG_FORCE
+#define DRAG_FORCE
 
 void ForceTest::Initialize() {
 	Test::Initialize();
 
+	glm::vec2 Position = m_Graphics->ScreenToWorld({ 400, 300 });
 #if defined(POINT_FORCE)
-	auto body = new Body(new CircleShape(200, { 1, 1, 1, 0.2f }), { 400, 300 }, { 0, 0 }, 0, Body::STATIC);
+	auto body = new Body(new CircleShape(3, { 1, 1, 1, 0.2f }), Position, { 0, 0 }, 0, Body::STATIC);
 	ForceGenerator* forcegenerator = new PointForce(body, 2000);
 	m_World->AddForceGenerator(forcegenerator);
 #elif defined(AREA_FORCE)
-	auto body = new Body(new CircleShape(200, { 1, 1, 1, 0.2f }), { 400, 300 }, { 0, 0 }, 0, Body::STATIC);
+	auto body = new Body(new CircleShape(3, { 1, 1, 1, 0.2f }), Position, { 0, 0 }, 0, Body::STATIC);
 	ForceGenerator* forceGenerator = new AreaForce(body, 2000, -90);
 	m_World->AddForceGenerator(forceGenerator);
 #elif defined(DRAG_FORCE)
-	auto body = new Body(new CircleShape(200, { 1, 1, 1, 0.5f }), { 400, 300 }, { 0, 0 }, 0, Body::STATIC);
-	ForceGenerator* forceGenerator = new DragForce(body, 0.5f);
+	auto body = new Body(new CircleShape(5, { 1, 1, 1, 0.5f }), Position, { 0, 0 }, 0, Body::STATIC);
+	ForceGenerator* forceGenerator = new DragForce(body, 0.75f);
 	m_World->AddForceGenerator(forceGenerator);
 #endif
-
-	//auto ForceGenerator = new GravitationalForce(100);
-	//m_World->AddForceGenerator(ForceGenerator);
 }
 
 void ForceTest::Update() {
 	Test::Update();
 
 	if (m_Input->GetMouseButton(0)) {
+		glm::vec2 Position = m_Graphics->ScreenToWorld(m_Input->GetMousePosition());
 		glm::vec2 Velocity = { 0,0 };
 		//glm::vec2 Velocity = RandomUnitCircle() * Randomf(100, 250);
 
-		float Size = Randomf(1, 8);
-		auto body = new Body(new CircleShape(Size * 2, { Randomf(), Randomf(), Randomf(), 1 }), m_Input->GetMousePosition(), Velocity, Size);
+		float Size = Randomf(0.1f, 0.8f);
+		auto body = new Body(new CircleShape(Size, { Randomf(), Randomf(), Randomf(), 1 }), Position, Velocity, Size);
 		body->Damping = 1;
-		body->GravityScale = 20;
+		body->GravityScale = 1;
 
 		m_World->AddBody(body);
 	}
